@@ -24,20 +24,19 @@ public class LoginController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-    	
-    	String email = request.getParameter("email");
-    	String pswd = request.getParameter("password");
+        String email = request.getParameter("email");
+        String pswd = request.getParameter("password");
 
-    	System.out.println("Email: " + email);
-    	System.out.println("Password: " + pswd);
-        
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + pswd);
         
         // Call validateUser on userDAO instance
         Users user = userDAO.validateUser(email, pswd);
         
         if (user != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("user", user); // Store the user object in the session
+            session.setAttribute("userId", user.getId()); // Explicitly store the userId (assuming user has a getId() method)
             session.setAttribute("successMessage", "Login successful! Welcome, " + user.getUsername());
             response.sendRedirect("quiz.jsp");
         } else {
@@ -46,3 +45,4 @@ public class LoginController extends HttpServlet {
         }
     }
 }
+

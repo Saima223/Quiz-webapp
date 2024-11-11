@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import testing.dao.QuizQuestionDAO;
 import testing.dbConnectiom.DBConnection;
 import testing.model.QuizQuestion;
@@ -23,7 +24,15 @@ public class QuizQuestionController extends HttpServlet {
             try (Connection conn = DBConnection.getConnection()) {
                 QuizQuestionDAO questionDAO = new QuizQuestionDAO(conn);
                 List<QuizQuestion> questions = questionDAO.getQuestionsByQuizId(Integer.parseInt(quizId));
+                
+                //set both request attributes 
                 request.setAttribute("questions", questions);
+                request.setAttribute("quizId", quizId);  
+                
+                // Also set in session as backup
+                HttpSession session = request.getSession();
+                session.setAttribute("currentQuizId", quizId);
+                
                 request.getRequestDispatcher("question.jsp").forward(request, response);
             } catch (Exception e) {
                 throw new ServletException("Database error", e);

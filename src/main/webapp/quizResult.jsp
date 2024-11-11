@@ -3,57 +3,62 @@
 <html>
 <head>
     <title>Quiz Results</title>
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Quiz Results</h1>
-        <div class="result-card">
-            <h2>Your Score</h2>
-            
-            <p class="score">
-                <%= request.getAttribute("score") %> out of <%= request.getAttribute("totalQuestions") %>
-                <span class="percentage">(<%= String.format("%.1f", (Double) request.getAttribute("percentage")) %>%)</span>
-            </p>
+    <div class="wave-bg"></div>
+    
+    <div class="username">Hello, ${sessionScope.user.username}!</div>
 
-            <!-- Displaying score, total questions, and percentage -->
-            <p>Score: <%= request.getAttribute("score") %></p>
-            <p>Total Questions: <%= request.getAttribute("totalQuestions") %></p>
-            <p>Percentage: <%= request.getAttribute("percentage") %></p>
-            
+    <div class="container">
+        <div class="logo">QuizWeb</div>
+        
+        <div class="category">Category: ${quiz.category}</div>
+        
+        <div class="result-text">You answered</div>
+        
+        <div class="score">
             <% 
-            Double percentage = (Double) request.getAttribute("percentage");  // Safely cast to Double
-            if (percentage != null) {  // Ensure the percentage is not null
-                if (percentage >= 80) { 
-            %>
-                    <p class="feedback">Excellent work! You've mastered this topic!</p>
-            <% 
-                } else if (percentage >= 60) { 
-            %>
-                    <p class="feedback">Good job! Keep practicing to improve further.</p>
-            <% 
-                } else { 
-            %>
-                    <p class="feedback">You might want to review this topic again.</p>
-            <% 
+                Integer score = (Integer) request.getAttribute("score");
+                Integer totalQuestions = (Integer) request.getAttribute("totalQuestions");
+
+                if (score == null || totalQuestions == null) {
+                    out.print("Error: Could not retrieve quiz results.");
+                } else {
+                    out.print(score + "/" + totalQuestions);
                 }
-            } else {
             %>
-                <p class="feedback">An error occurred while calculating your percentage.</p>
+        </div>
+        
+        <div class="correct-text">Questions Correct!</div>
+        
+        <div class="message">
             <% 
-            }
+                if (score != null && totalQuestions != null) {
+                    if (score == totalQuestions) {
+                        out.print("Good job! Your work is very good.");
+                    } else if (score >= totalQuestions * 0.7) {
+                        out.print("Well done! Keep up the good work!");
+                    } else if (score >= totalQuestions * 0.5) {
+                        out.print("Nice try! Room for improvement.");
+                    } else {
+                        out.print("Keep practicing! You'll do better next time.");
+                    }
+                }
             %>
         </div>
         
-        <!-- Links for further actions -->
-        <div class="actions">
-            <!-- Link to return to quiz list -->
-            <a href="<%= request.getContextPath() %>/quizList" class="button">Return to Quiz List</a>
-            
-            <!-- Link to review the quiz answers -->
-            <a href="<%= request.getContextPath() %>/reviewQuiz?id=<%= request.getParameter("quizId") %>" class="button">Review Answers</a>
+        <div class="buttons">
+            <a href="quizList" class="button">Back to Home</a>
+            <a href="quizQuestion?quizId=${quizId}" class="button">Play Again</a>
         </div>
-        
     </div>
+
+    <footer>
+        © 2024 QuizWeb. All rights reserved.<br>
+        Developed & designed by<br>
+        Saima <3
+    </footer>
+        
 </body>
 </html>

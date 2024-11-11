@@ -12,87 +12,115 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Enumeration;
 
 @WebServlet("/submitQuiz")
 public class SubmitQuizController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-    	  // Get id (user ID) from session (ensure it's an Integer)
-        Integer Id = (Integer) request.getSession().getAttribute("id"); // Assuming user ID is stored as Integer in session
-        if (Id == null) {
-            System.out.println("User ID is null");
-            response.sendRedirect("login.jsp"); // Redirect to login if no user ID is found in the session
+        
+        System.out.println("\n=== Starting Quiz Submission Process ===");
+
+        // Get session and check user authentication
+        HttpSession session = request.getSession(false);
+        Integer userId = session != null ? (Integer) session.getAttribute("userId") : null;
+        
+        if (userId == null) {
+            System.out.println("ERROR: User ID is null - redirecting to login.jsp");
+            response.sendRedirect("login.jsp");
             return;
         }
-    	
-        // Get the quiz ID from the request (make sure it's treated as an integer)
+
+        // Get quiz ID from multiple sources
         String quizIdStr = request.getParameter("quizId");
-
+        System.out.println("QuizId from parameter: " + quizIdStr);
+        
         if (quizIdStr == null || quizIdStr.isEmpty()) {
-            response.sendRedirect("error.jsp");
+            quizIdStr = String.valueOf(session.getAttribute("currentQuizId"));
+            System.out.println("QuizId from session: " + quizIdStr);
+        }
+
+        // Validate quiz ID
+        if (quizIdStr == null || quizIdStr.equals("null") || quizIdStr.trim().isEmpty()) {
+            System.out.println("ERROR: No quiz ID found in either parameter or session");
+            response.sendRedirect("quizList");
             return;
         }
 
+        // Parse quiz ID
         int quizId;
         try {
-            quizId = Integer.parseInt(quizIdStr);  // Parse quizId as an integer
+            quizId = Integer.parseInt(quizIdStr);
+            System.out.println("Parsed Quiz ID: " + quizId);
         } catch (NumberFormatException e) {
-            response.sendRedirect("error.jsp");
+            System.out.println("ERROR: Failed to parse Quiz ID: " + quizIdStr);
+            e.printStackTrace();
+            response.sendRedirect("quizList");
             return;
         }
 
+        // Process quiz submission
         try (Connection conn = DBConnection.getConnection()) {
-            // Get the list of questions for the quiz
+            System.out.println("\nDatabase Connection Established");
+            
+            // Get questions
             QuizQuestionDAO questionDAO = new QuizQuestionDAO(conn);
             List<QuizQuestion> questions = questionDAO.getQuestionsByQuizId(quizId);
             
-            // Process submitted answers and calculate score
-            int score = 8;
-            for (QuizQuestion question : questions) {
-                String submittedAnswer = request.getParameter("question_" + question.getQuestionId());
+            if (questions.isEmpty()) {
+                System.out.println("ERROR: No questions found for quiz ID: " + quizId);
+                response.sendRedirect("quizList");
+                return;
+            }
 
-                // Compare submitted answer with the correct option (ensure submittedAnswer is parsed as integer)
-                if (submittedAnswer != null && Integer.parseInt(submittedAnswer) == question.getCorrectOption()) {
-                    score++; // Increment score if answer is correct
+            // Process answers and calculate score
+            int score = 0;
+            System.out.println("\nProcessing Answers:");
+            for (QuizQuestion question : questions) {
+                String paramName = "question_" + question.getQuestionId();
+                String submittedAnswer = request.getParameter(paramName);
+                
+                if (submittedAnswer != null && !submittedAnswer.isEmpty()) {
+                    try {
+                        int submittedOption = Integer.parseInt(submittedAnswer);
+                        if (submittedOption == question.getCorrectOption()) {
+                            score++;
+                        }
+                        System.out.println("Question " + question.getQuestionId() + 
+                                         ": Submitted=" + submittedOption + 
+                                         ", Correct=" + question.getCorrectOption());
+                    } catch (NumberFormatException e) {
+                        System.out.println("WARNING: Invalid answer format for question " + 
+                                         question.getQuestionId());
+                    }
                 }
             }
 
-            // Optionally store the result in the database
-            QuizResultDAO resultDAO = new QuizResultDAO(conn);
-            
-            // Get id (user ID) from session (ensure it's an Integer)
-            Integer userId = (Integer) request.getSession().getAttribute("id"); // Assuming user ID is stored as Integer in session
-            if (userId == null) {
-                response.sendRedirect("login.jsp"); // Redirect to login if no user ID is found in the session
-                return;
-            }
-            
-            // Create a QuizResult object
-            QuizResult result = new QuizResult(quizId, userId, score, questions.size());
-
-            // Save the result in the database
-            resultDAO.saveQuizResult(result);
-
-            // Calculate percentage
+            // Calculate and save results
             double percentage = (score / (double) questions.size()) * 100;
+            System.out.println("\nFinal Score: " + score + "/" + questions.size() + 
+                             " (" + percentage + "%)");
 
-            System.out.println("Score: " + score);
-            System.out.println("Total Questions: " + questions.size());
-            System.out.println("Percentage: " + percentage);
+            // Save result to database
+            QuizResultDAO resultDAO = new QuizResultDAO(conn);
+            QuizResult result = new QuizResult(quizId, userId, score, questions.size());
+            resultDAO.saveQuizResult(result);
+            System.out.println("Quiz result saved to database");
 
-            // Set score, total questions, and percentage as request attributes
+            // Set attributes for result page
             request.setAttribute("score", score);
             request.setAttribute("totalQuestions", questions.size());
-            request.setAttribute("percentage", percentage);  // Add percentage attribute
+            request.setAttribute("percentage", percentage);
+            request.setAttribute("quizId", quizId);
 
-            // Forward to results page
+            // Forward to result page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/quizResult.jsp");
             dispatcher.forward(request, response);
+            
         } catch (Exception e) {
-            // Log the error and redirect to error page
+            System.out.println("\nERROR: Unexpected exception occurred:");
             e.printStackTrace();
             response.sendRedirect("error.jsp");
         }
-        
     }
 }
