@@ -1,48 +1,61 @@
 package testing.servlet;
-import java.io.IOException;
 
+import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import testing.dao.UserDAO; // Import the UserDAO class
+import testing.dao.UserDAO;
 import testing.model.Users;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    private UserDAO userDAO; // Declare an instance of UserDAO
-
-    // Default constructor
+    private UserDAO userDAO;
+    
     public LoginController() {
         super();
-        userDAO = new UserDAO(); // Initialize the UserDAO instance
+        userDAO = new UserDAO();
     }
-
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String pswd = request.getParameter("password");
-
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + pswd);
-        
-        // Call validateUser on userDAO instance
-        Users user = userDAO.validateUser(email, pswd);
-        
-        if (user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user); // Store the user object in the session
-            session.setAttribute("userId", user.getId()); // Explicitly store the userId (assuming user has a getId() method)
-            session.setAttribute("successMessage", "Login successful! Welcome, " + user.getUsername());
-            response.sendRedirect("quiz.jsp");
-        } else {
-            request.setAttribute("errorMessage", "Invalid username or password");
+        try {
+            String email = request.getParameter("email");
+            String pswd = request.getParameter("password");
+            
+            // Debug logs
+            System.out.println("Login attempt - Email: " + email);
+            
+            Users user = userDAO.validateUser(email, pswd);
+            
+            if (user != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                session.setAttribute("userId", user.getId());
+                
+                // Debug logs
+                System.out.println("Login successful for user ID: " + user.getId());
+                System.out.println("Session ID: " + session.getId());
+                
+                response.sendRedirect("quiz.jsp");
+            } else {
+                // Debug logs
+                System.out.println("Login failed - Invalid credentials");
+                
+                request.setAttribute("errorMessage", "Invalid email or password");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            // Debug logs
+            System.out.println("Error in LoginController: " + e.getMessage());
+            e.printStackTrace();
+            
+            request.setAttribute("errorMessage", "An error occurred during login");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }
-

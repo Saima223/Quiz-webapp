@@ -51,7 +51,6 @@
     } else {
     %>
     <p>No questions available for this quiz.</p>
-    <a href="quizList">Return to Quiz List</a>
     <%
     }
     %>

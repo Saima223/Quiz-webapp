@@ -10,6 +10,13 @@
 </head>
 <body>
     <h1>Available Quizzes</h1>
+    <% 
+     // Check if user is logged in
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    %>
 
     <!-- Display success message if exists -->
     <div class="quiz-container">
@@ -56,11 +63,14 @@
     <%
         }
     %>
-    
+   
+   <form action="logout" method="get">
+            <button type="submit">Logout</button>
+        </form>
     <!-- Link to trigger the /quizList servlet -->
     <div>
         <a href="quizList">Go to Quiz List</a> <!-- This triggers your QuizListController servlet -->
     </div>
-
+ 
 </body>
 </html>
