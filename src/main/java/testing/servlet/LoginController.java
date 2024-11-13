@@ -36,6 +36,7 @@ public class LoginController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 session.setAttribute("userId", user.getId());
+                session.setAttribute("fname", user.getUsername());
                 
                 // Debug logs
                 System.out.println("Login successful for user ID: " + user.getId());

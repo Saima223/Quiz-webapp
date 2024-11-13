@@ -8,12 +8,14 @@
 <body>
     <div class="wave-bg"></div>
     
-    <div class="username">Hello, ${sessionScope.user.username}!</div>
+    <!-- Display username -->
+    <div class="username">Hello, <%= request.getAttribute("fname") %></div>
 
     <div class="container">
         <div class="logo">QuizWeb</div>
         
-        <div class="category">Category: ${quiz.category}</div>
+        <!-- Display category -->
+        <div class="category">Category: <%= request.getAttribute("category") %> </div>
         
         <div class="result-text">You answered</div>
         
@@ -50,7 +52,7 @@
         
         <div class="buttons">
             <a href="quizList" class="button">Back to Home</a>
-            <a href="quizQuestion?quizId=${quizId}" class="button">Play Again</a>
+            <a href="quizQuestion?quizId=<%= request.getAttribute("quizId") %>" class="button">Play Again</a>
         </div>
     </div>
 

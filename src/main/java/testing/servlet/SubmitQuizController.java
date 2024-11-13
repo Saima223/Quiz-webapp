@@ -96,10 +96,6 @@ public class SubmitQuizController extends HttpServlet {
                 }
             }
 
-            // Calculate and save results
-            double percentage = (score / (double) questions.size()) * 100;
-            System.out.println("\nFinal Score: " + score + "/" + questions.size() + 
-                             " (" + percentage + "%)");
 
             // Save result to database
             QuizResultDAO resultDAO = new QuizResultDAO(conn);
@@ -107,10 +103,16 @@ public class SubmitQuizController extends HttpServlet {
             resultDAO.saveQuizResult(result);
             System.out.println("Quiz result saved to database");
 
-            // Set attributes for result page
+            // Set attributes for JSP
+            String fname = (String) session.getAttribute("fname");
+            request.setAttribute("fname", fname);
+            String category = questionDAO.getCategory(quizId);  // Fetch category
+            if (category == null) {
+                category = "Unknown Category";  // Default value if category is missing
+            }
+            request.setAttribute("category", category);
             request.setAttribute("score", score);
             request.setAttribute("totalQuestions", questions.size());
-            request.setAttribute("percentage", percentage);
             request.setAttribute("quizId", quizId);
 
             // Forward to result page

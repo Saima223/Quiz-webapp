@@ -24,6 +24,7 @@ public class QuizDAO {
                 quiz.setQuizId(rs.getInt("quiz_id"));
                 quiz.setTitle(rs.getString("title"));
                 quiz.setDescription(rs.getString("description"));
+                quiz.setCategory(rs.getString("category"));
                 quiz.setTotalQuestions(rs.getInt("total_questions"));
                 quizzes.add(quiz);
             }

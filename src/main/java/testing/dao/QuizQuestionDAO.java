@@ -36,4 +36,19 @@ public class QuizQuestionDAO {
         }
         return questions;
     }
+    public String getCategory(int quizId) throws SQLException {
+        String category = null;
+        String query = "SELECT category FROM quizzes WHERE quiz_id = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, quizId);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    category = rs.getString("category");
+                }
+            }
+        }
+        return category;
+    }
 }
