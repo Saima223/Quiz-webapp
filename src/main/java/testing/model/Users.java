@@ -5,7 +5,42 @@ public class Users {
     private String fname;
     private String pswd;
     private String email;
+    private long pnumber;
+    private String anumber;
     
+    // Default constructor
+    public Users() {}
+
+    // Constructor with all fields
+    public Users(int id, String anumber, String fname, String email, long pnumber, String pswd) {
+        this.id = id;
+        this.anumber = anumber;
+        this.fname = fname;
+        this.email = email;
+        this.pnumber = pnumber;
+        this.pswd = pswd;
+    }
+
+    public Users(String anumber2, String fname2, String email2, long pnumber2, String pswd2) {
+		// TODO Auto-generated constructor stub
+	}
+
+    public long getPnumber() {
+		return pnumber;
+	}
+
+	public void setPnumber(long pnumber) {
+		this.pnumber = pnumber;
+	}
+
+	public String getAnumber() {
+		return anumber;
+	}
+
+	public void setAnumber(String anumber) {
+		this.anumber = anumber;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -31,6 +66,4 @@ public class Users {
 		this.pswd = password;
 	}
     
-    // Getters and Setters
-   
 }

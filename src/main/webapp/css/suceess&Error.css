@@ -1,0 +1,85 @@
+@charset "UTF-8";
+      body {
+            height: 100vh; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white; 
+            margin-left:200px;
+            padding-left:200px;
+            background: #25252b;
+            
+        }
+
+        .success-box {
+            max-width: 500px; /* Fixed width */
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+           background: linear-gradient(90deg, transparent, #800080, transparent);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);    
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 50px; 
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .countdown {
+            font-size: 1.25rem;
+            margin-top: 20px;
+        }
+        
+        
+                body {
+            height: 100vh; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white; 
+            margin-left:200px;
+            padding-left:200px;
+            background: #25252b;
+            
+        }
+        
+        .error-box {
+             max-width: 500px;
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+             background: linear-gradient(90deg, transparent, #800080, transparent);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);    
+            
+        }
+      
+         .emoji {
+            font-size: 50px; 
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
