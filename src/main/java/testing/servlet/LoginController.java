@@ -42,7 +42,7 @@ public class LoginController extends HttpServlet {
                 System.out.println("Login successful for user ID: " + user.getId());
                 System.out.println("Session ID: " + session.getId());
                 
-                response.sendRedirect("quiz.jsp");
+                response.sendRedirect("quizList");
             } else {
                 // Debug logs
                 System.out.println("Login failed - Invalid credentials");

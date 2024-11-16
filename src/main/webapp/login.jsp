@@ -14,7 +14,14 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/login&registration.css">
 </head>
-
+<style>
+.text-center p {
+color="yellow";
+}
+.mb-3{
+color="blue"
+}
+</style>
 <body>
     <%
         // Display error message if any
@@ -46,7 +53,7 @@
             <button type="submit" class="btn btn-custom w-100">Login</button>
 
             <div class="text-center mt-3">
-                <p>Don't have an account? <a href="registration.jsp" class="toggle-link">Register here</a></p>
+                <p color="yellow">Don't have an account? <a href="registration.jsp" class="toggle-link">Register here</a></p>
             </div>
         </form>
     </div>
@@ -63,7 +70,7 @@
                     <p>Login successful! Welcome, <%= request.getAttribute("fname") %>.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"><a href="quiz.jsp">Go to Quiz List</a></button>
+                    <button type="button" class="btn btn-primary"><a href="quizList">Go to Quiz List</a></button>
                 </div>
             </div>
         </div>
