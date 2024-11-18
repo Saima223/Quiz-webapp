@@ -131,7 +131,7 @@
 
         .quiz-card:hover {
             transform: var(--hover-transform);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,1.3);
         }
 
         .quiz-card img {
@@ -361,6 +361,7 @@
             background: #6366f1;
             transform: var(--hover-transform);
         }
+
     </style>
 </head>
 <body>
@@ -389,7 +390,7 @@
                 for (Quiz quiz : quizzes) {
             %>
             <div class="quiz-card">
-                <img src="/api/placeholder/120/120" alt="<%= quiz.getTitle() %> Logo">
+                <img src="./images/java.jpg" alt="<%= quiz.getTitle() %> Logo">
                 <h3><%= quiz.getTitle() %></h3>
                 <p><%= quiz.getDescription() %></p>
                 <a href="quizQuestion?quizId=<%= quiz.getQuizId() %>" class="start-quiz-btn">Start Quiz</a>
@@ -406,21 +407,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="social-links">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-        </div>
-        <p>© 2024 QuizWeb. All rights reserved.</p>
-        <div class="developer-info">
-            Developed & designed by 
-            <a href="https://github.com/ibadbargir">Ibad</a> | 
-            <a href="https://github.com/Saima223">Saima</a> | 
-            <a href="https://github.com/Rabina-Vishwakarma">Rabina</a> | 
-            <a href="https://github.com/SakshiArvindYadav">Sakshi</a>
-        </div>
-    </footer>
+    <jsp:include page="footer.jsp" />
+
 </body>
 </html>

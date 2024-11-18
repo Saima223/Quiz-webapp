@@ -14,14 +14,6 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/login&registration.css">
 </head>
-<style>
-.text-center p {
-color="yellow";
-}
-.mb-3{
-color="blue"
-}
-</style>
 <body>
     <%
         // Display error message if any
