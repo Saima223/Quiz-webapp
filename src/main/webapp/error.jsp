@@ -230,7 +230,7 @@
         <div class="icon"></div>
         <h1>Oops! Hold On...</h1>
         <p>We've encountered a small hiccup while processing your request. Don't worry - these things happen! Let's try again.</p>
-        <a href="quizList" class="btn">Try Again</a>
+        <a href="home.jsp" class="btn">Try Again</a>
     </div>
 
     <script>

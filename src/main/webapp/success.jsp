@@ -229,7 +229,7 @@
         <div class="icon"></div>
         <h1>Excellent Work!</h1>
         <p>Congratulations! You've successfully completed the quiz. Your results have been recorded and you're ready to tackle the next challenge!</p>
-        <a href="index.jsp" class="btn">Continue Journey</a>
+        <a href="quizList" class="btn">Continue Journey</a>
     </div>
 
     <script>

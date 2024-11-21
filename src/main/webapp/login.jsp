@@ -309,7 +309,7 @@
                     type="email" 
                     id="email" 
                     name="email" 
-                    required
+                    
                     value="<%= request.getParameter("email") != null ? request.getParameter("email") : "" %>"
                     class="<%= errorMessage != null ? "error" : "" %>"
                     placeholder="Enter your email"
@@ -322,7 +322,7 @@
                     type="password" 
                     id="password" 
                     name="password" 
-                    required
+                    
                     class="<%= errorMessage != null ? "error" : "" %>"
                     placeholder="Enter your password"
                 >

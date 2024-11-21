@@ -57,7 +57,7 @@ public class RegistrationController extends HttpServlet {
 				
 				request.setAttribute("fname", fname);
 				
-				RequestDispatcher dispatcher = request.getRequestDispatcher("registration-success.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("success.jsp");
 				
 				dispatcher.forward(request, response);
 			} else {

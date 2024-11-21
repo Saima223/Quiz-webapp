@@ -268,11 +268,11 @@
 <body>
     <div class="container">
         <h2>Join QuizWeb</h2>
-        <form action="success.jsp" method="POST" id="registerForm" onsubmit="return validateForm()">
+        <form action="registerr" method="POST" id="registerForm" onsubmit="return validateForm()">
             <div class="form-group">
-                <label class="form-label">Admission Number</label>
+                <label class="form-label" >Admission Number</label>
                 <div class="input-group">
-                    <input type="text" id="admissionNumber" class="form-control" readonly>
+                    <input type="text" id="admissionNumber" name="anumber" class="form-control" readonly>
                     <span class="input-group-icon">🎓</span>
                 </div>
             </div>
@@ -327,7 +327,7 @@
             const baseNumber = 2024000;
             const random = Math.floor(Math.random() * 1000);
             const admissionInput = document.getElementById('admissionNumber');
-            const finalNumber = `ADM${baseNumber + random}`;
+            const finalNumber = `S${baseNumber + random}`;
             
             let currentNumber = baseNumber;
             const increment = Math.floor((baseNumber + random - baseNumber) / 20);
