@@ -177,18 +177,18 @@
         .btn-primary {
             background: linear-gradient(45deg, #6c5ce7, #a29bfe);
             color: white;
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            box-shadow: 0 4px 15px rgba(18, 0.2, 31, 0.3);
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1);
             color: #a29bfe;
-            border: 1px solid rgba(162, 155, 254, 0.3);
+            border: 1px solid rgba(122, 155, 254, 0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+            box-shadow: 0 6px 20px rgba(108, 92, 221, 0.4);
         }
 
         .btn-secondary:hover {
@@ -447,7 +447,7 @@
 
         .btn-primary:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 9.2, 0, 0.4);
         }
 
         .btn-secondary {
@@ -608,7 +608,7 @@
             <div class="developer-links">
                 <a href="https://github.com/ibadbargir">Ibad</a> |
                 <a href="https://github.com/Saima223">Saima</a> |
-                <a href="https://github.com/Rabina-Vishwakarma">Rabina</a> |
+                <a href="https://github.com/Rabina-Vishwakarma">Rabina </a> |
                 <a href="https://github.com/SakshiArvindYadav">Sakshi</a>
             </div>
         </div>
