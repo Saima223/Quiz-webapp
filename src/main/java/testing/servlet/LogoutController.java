@@ -36,14 +36,14 @@ public class LogoutController extends HttpServlet {
             }
             
             // Redirect to login page
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("home.jsp");
             
         } catch (Exception e) {
             // Debug logs
             System.out.println("Error in LogoutServlet: " + e.getMessage());
             e.printStackTrace();
             
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("home.jsp");
         }
     }
 }
