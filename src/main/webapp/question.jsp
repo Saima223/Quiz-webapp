@@ -204,9 +204,15 @@
 
     <div class="quiz-container">
         <div class="quiz-header">
-            <h1>
-                <i class="fas fa-brain"></i> Quiz Challenge
-            </h1>
+            <div class="header-left">
+                <h1>
+                    <i class="fas fa-brain"></i> 
+                    <%= request.getAttribute("title") != null ? request.getAttribute("title") : "Quiz Challenge" %>
+                </h1>
+            </div>
+            <div class="header-right">
+                <b><%= session.getAttribute("fname") != null ? session.getAttribute("fname") : "Guest" %></b>
+            </div>
             <div class="quiz-timer">
                 <i class="fas fa-clock"></i> Time Left: 30:00
             </div>

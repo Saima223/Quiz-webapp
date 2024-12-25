@@ -33,6 +33,13 @@ public class QuizQuestionController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("currentQuizId", quizId);
                 
+                String title = questionDAO.getTitle(quizId);  // Fetch Title
+                if (title == null) {
+                	title = "Unknown title";  // Default value if Title is missing
+                }
+                request.setAttribute("title", title);
+                
+                
                 request.getRequestDispatcher("question.jsp").forward(request, response);
             } catch (Exception e) {
                 throw new ServletException("Database error", e);
