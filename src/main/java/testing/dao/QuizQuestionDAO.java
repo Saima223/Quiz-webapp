@@ -30,6 +30,7 @@ public class QuizQuestionDAO {
                     question.setOption3(rs.getString("option3"));
                     question.setOption4(rs.getString("option4"));
                     question.setCorrectOption(rs.getInt("correct_option"));
+                    question.setDifficulty(rs.getString("difficulty"));
                     questions.add(question);
                 }
             }
@@ -39,9 +40,9 @@ public class QuizQuestionDAO {
     
     public String getTitle(String quizId) throws SQLException {
         String title = null;
-        String query = "SELECT title FROM quizzes WHERE id = ?";
+        String query = "SELECT title FROM quizzes WHERE quiz_id = ?";
         
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, Integer.parseInt(quizId));
             
             try (ResultSet rs = ps.executeQuery()) {

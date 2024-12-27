@@ -9,6 +9,15 @@ public class QuizQuestion {
     private String option3;
     private String option4;
     private int correctOption;
+    private String difficulty;
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
     
 	public int getQuestionId() {
 		return questionId;

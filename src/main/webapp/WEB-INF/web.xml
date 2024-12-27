@@ -10,8 +10,18 @@
   	<description></description>
   	<servlet-class>testing.servlet.LoginController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>DifficultyController</servlet-name>
+  	<display-name>DifficultyController</display-name>
+  	<description></description>
+  	<servlet-class>testing.servlet.DifficultyController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>LoginController</servlet-name>
   	<url-pattern>/LoginController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DifficultyController</servlet-name>
+  	<url-pattern>/DifficultyController</url-pattern>
   </servlet-mapping>
 </web-app>

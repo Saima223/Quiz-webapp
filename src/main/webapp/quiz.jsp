@@ -393,7 +393,7 @@
                 <img src="./images/java.jpg" alt="<%= quiz.getTitle() %> Logo">
                 <h3><%= quiz.getTitle() %></h3>
                 <p><%= quiz.getDescription() %></p>
-                <a href="quizQuestion?quizId=<%= quiz.getQuizId() %>" class="start-quiz-btn">Start Quiz</a>
+                <a href="Difficulty.jsp" class="start-quiz-btn">Start Quiz</a>
             </div>
             <%
                 }
