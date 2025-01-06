@@ -608,7 +608,6 @@
             <div class="developer-links">
                 <a href="https://github.com/ibadbargir">Ibad</a> |
                 <a href="https://github.com/Saima223">Saima</a> |
-                <a href="https://github.com/Rabina-Vishwakarma">Rabina </a> |
                 <a href="https://github.com/SakshiArvindYadav">Sakshi</a>
             </div>
         </div>
