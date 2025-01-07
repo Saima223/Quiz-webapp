@@ -16,12 +16,14 @@ import java.util.List;
 public class QuizListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        // Clear any existing quizId from session when showing quiz list
+        HttpSession session = request.getSession();
+        session.removeAttribute("currentQuizId");
+        
         try (Connection conn = DBConnection.getConnection()) {
-       	 // Fetch the list of quizzes from the database or model
             QuizDAO quizDAO = new QuizDAO(conn);
             List<Quiz> quizzes = quizDAO.getAllQuizzes();        
             request.setAttribute("quizzes", quizzes);
-            // Forward the request to quizzes.jsp
             RequestDispatcher dispatcher = request.getRequestDispatcher("/quiz.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {

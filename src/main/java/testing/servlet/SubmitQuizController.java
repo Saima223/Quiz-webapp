@@ -12,7 +12,8 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
-import java.util.Enumeration;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @WebServlet("/submitQuiz")
 public class SubmitQuizController extends HttpServlet {
@@ -31,30 +32,16 @@ public class SubmitQuizController extends HttpServlet {
             return;
         }
 
-        // Get quiz ID from multiple sources
-        String quizIdStr = request.getParameter("quizId");
-        System.out.println("QuizId from parameter: " + quizIdStr);
+        // Get quiz ID, difficulty, and random count from session
+        Integer quizId = (Integer) session.getAttribute("currentQuizId");
+        String difficulty = (String) session.getAttribute("currentDifficulty");
+        String randomCount = (String) session.getAttribute("randomCount");
         
-        if (quizIdStr == null || quizIdStr.isEmpty()) {
-            quizIdStr = String.valueOf(session.getAttribute("currentQuizId"));
-            System.out.println("QuizId from session: " + quizIdStr);
-        }
+        System.out.println("Quiz submission - QuizId: " + quizId + ", Difficulty: " + difficulty);
 
         // Validate quiz ID
-        if (quizIdStr == null || quizIdStr.equals("null") || quizIdStr.trim().isEmpty()) {
-            System.out.println("ERROR: No quiz ID found in either parameter or session");
-            response.sendRedirect("quizList");
-            return;
-        }
-
-        // Parse quiz ID
-        int quizId;
-        try {
-            quizId = Integer.parseInt(quizIdStr);
-            System.out.println("Parsed Quiz ID: " + quizId);
-        } catch (NumberFormatException e) {
-            System.out.println("ERROR: Failed to parse Quiz ID: " + quizIdStr);
-            e.printStackTrace();
+        if (quizId == null) {
+            System.out.println("ERROR: No quiz ID found in session");
             response.sendRedirect("quizList");
             return;
         }
@@ -71,6 +58,26 @@ public class SubmitQuizController extends HttpServlet {
                 System.out.println("ERROR: No questions found for quiz ID: " + quizId);
                 response.sendRedirect("quizList");
                 return;
+            }
+
+            // Filter questions based on difficulty
+            if (difficulty != null && !difficulty.equals("random")) {
+                questions = questions.stream()
+                    .filter(q -> q.getDifficulty().equalsIgnoreCase(difficulty))
+                    .collect(Collectors.toList());
+            } else if (difficulty != null && difficulty.equals("random") && randomCount != null) {
+                try {
+                    int count = Integer.parseInt(randomCount);
+                    if (questions.size() > count) {
+                        Random rand = new Random();
+                        questions = questions.stream()
+                            .sorted((a, b) -> rand.nextInt(3) - 1)
+                            .limit(count)
+                            .collect(Collectors.toList());
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("WARNING: Invalid randomCount: " + randomCount);
+                }
             }
 
             // Process answers and calculate score
@@ -96,7 +103,6 @@ public class SubmitQuizController extends HttpServlet {
                 }
             }
 
-
             // Save result to database
             QuizResultDAO resultDAO = new QuizResultDAO(conn);
             QuizResult result = new QuizResult(quizId, userId, score, questions.size());
@@ -106,14 +112,19 @@ public class SubmitQuizController extends HttpServlet {
             // Set attributes for JSP
             String fname = (String) session.getAttribute("fname");
             request.setAttribute("fname", fname);
-            String category = questionDAO.getCategory(quizId);  // Fetch category
+            String category = questionDAO.getCategory(quizId);
             if (category == null) {
-                category = "Unknown Category";  // Default value if category is missing
+                category = "Unknown Category";
             }
             request.setAttribute("category", category);
             request.setAttribute("score", score);
             request.setAttribute("totalQuestions", questions.size());
             request.setAttribute("quizId", quizId);
+
+            // Clear quiz-related session attributes after submission
+            session.removeAttribute("currentQuizId");
+            session.removeAttribute("currentDifficulty");
+            session.removeAttribute("randomCount");
 
             // Forward to result page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/quizResult.jsp");

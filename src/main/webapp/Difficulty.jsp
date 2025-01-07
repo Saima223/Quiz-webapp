@@ -166,46 +166,71 @@
     </style>
 </head>
 <body>
-    <div class="difficulty-container">
-        <h1>Select Difficulty</h1>
-        <form action="difficulty" method="post">
-        <%
-    String quizId = request.getAttribute("quizId") != null ? 
-                    request.getAttribute("quizId").toString() : 
-                    request.getParameter("quizId");
+<div class="difficulty-container">
+    <h1>Select Difficulty</h1>
+    
+    <%
+    // Get quizId from multiple sources
+    String quizId = null;
+    
+    // First try request parameter
+    quizId = request.getParameter("quizId");
+    
+    // Then try request attribute
+    if (quizId == null || quizId.trim().isEmpty()) {
+        Object attrQuizId = request.getAttribute("quizId");
+        if (attrQuizId != null) {
+            quizId = attrQuizId.toString();
+        }
+    }
+    
+    // Finally try session
+    if (quizId == null || quizId.trim().isEmpty()) {
+        Object sessionQuizId = session.getAttribute("currentQuizId");
+        if (sessionQuizId != null) {
+            quizId = sessionQuizId.toString();
+        }
+    }
+    
+    System.out.println("Debug - difficulty.jsp - QuizId from parameter: " + request.getParameter("quizId"));
+    System.out.println("Debug - difficulty.jsp - QuizId from attribute: " + request.getAttribute("quizId"));
+    System.out.println("Debug - difficulty.jsp - QuizId from session: " + session.getAttribute("currentQuizId"));
+    System.out.println("Debug - difficulty.jsp - Final QuizId being used: " + quizId);
     %>
-            <input type="hidden" name="quizId" value="<%= request.getAttribute("quizId") %>">
-            
-            <div class="difficulty-option">
-                <input type="radio" name="difficulty" value="easy" id="easy">
-                <label for="easy">Easy</label>
-            </div>
-            
-            <div class="difficulty-option">
-                <input type="radio" name="difficulty" value="medium" id="medium">
-                <label for="medium">Medium</label>
-            </div>
-            
-            <div class="difficulty-option">
-                <input type="radio" name="difficulty" value="hard" id="hard">
-                <label for="hard">Hard</label>
-            </div>
-            
-            <div class="difficulty-option">
-                <input type="radio" name="difficulty" value="random" id="random">
-                <label for="random">Random Mix</label>
-            </div>
-            
-            <div class="random-options" id="randomOptions">
-                <select name="randomCount" id="randomCount">
-                    <option value="5">5 Questions</option>
-                    <option value="3">3 Questions</option>
-                    <option value="5">5 Questions</option>
-                </select>
-            </div>
-            <button type="submit" class="btn">Start Quiz</button>
-        </form>
-    </div>
+    
+    <form action="difficulty" method="post">
+        <input type="hidden" name="quizId" value="<%= quizId %>">
+        
+        <div class="difficulty-option">
+            <input type="radio" name="difficulty" value="easy" id="easy" required>
+            <label for="easy">Easy</label>
+        </div>
+
+        <div class="difficulty-option">
+            <input type="radio" name="difficulty" value="medium" id="medium">
+            <label for="medium">Medium</label>
+        </div>
+
+        <div class="difficulty-option">
+            <input type="radio" name="difficulty" value="hard" id="hard">
+            <label for="hard">Hard</label>
+        </div>
+
+        <div class="difficulty-option">
+            <input type="radio" name="difficulty" value="random" id="random">
+            <label for="random">Random Mix</label>
+        </div>
+
+        <div class="random-options" id="randomOptions" style="display: none;">
+            <select name="randomCount" id="randomCount">
+                <option value="3">3 Questions</option>
+                <option value="5">5 Questions</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn">Start Quiz</button>
+    </form>
+</div>
 
     <script>
         document.getElementById('random').addEventListener('change', function() {
