@@ -201,6 +201,8 @@
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ page import="java.util.List" %>
     <%@ page import="testing.model.QuizQuestion" %>
+    
+    <jsp:include page="header.jsp" />
 
     <div class="quiz-container">
         <div class="quiz-header">
@@ -209,9 +211,6 @@
                     <i class="fas fa-brain"></i> 
                     <%= request.getAttribute("title") != null ? request.getAttribute("title") : "Quiz Challenge" %>
                 </h1>
-            </div>
-            <div class="header-right">
-                <b><%= session.getAttribute("fname") != null ? session.getAttribute("fname") : "Guest" %></b>
             </div>
             <div class="quiz-timer">
                 <i class="fas fa-clock"></i> Time Left: 30:00
