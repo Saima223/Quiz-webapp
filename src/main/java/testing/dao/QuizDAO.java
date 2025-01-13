@@ -26,6 +26,7 @@ public class QuizDAO {
                 quiz.setDescription(rs.getString("description"));
                 quiz.setCategory(rs.getString("category"));
                 quiz.setTotalQuestions(rs.getInt("total_questions"));
+                quiz.setImagePath(rs.getString("image_path"));
                 quizzes.add(quiz);
             }
         }

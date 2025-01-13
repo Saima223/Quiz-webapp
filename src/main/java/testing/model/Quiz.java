@@ -6,6 +6,7 @@ public class Quiz {
     private String description;
     private int totalQuestions;
     private String category;
+    private String imagePath;
     
 	public int getQuizId() {
 		return quizId;
@@ -36,5 +37,11 @@ public class Quiz {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

@@ -390,7 +390,15 @@
                 for (Quiz quiz : quizzes) {
             %>
             <div class="quiz-card">
-                <img src="./images/java.jpg" alt="<%= quiz.getTitle() %> Logo">
+                <div class="proimge">
+             <% if (quiz.getImagePath() != null && !quiz.getImagePath().isEmpty()) { %>
+                    <img src="<%= request.getContextPath() %>/<%= quiz.getImagePath() %>" class="quiz-image" />
+
+                <% } else { %>
+                    <p>No image available.</p>
+                <% }
+                
+                %></div>
                 <h3><%= quiz.getTitle() %></h3>
                 <p><%= quiz.getDescription() %></p>
                 <a href="Difficulty.jsp?quizId=<%= quiz.getQuizId() %>" class="start-quiz-btn">Start Quiz</a>
