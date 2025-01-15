@@ -93,7 +93,7 @@ QuizProject/
 
 1. Clone the repository to your local machine:
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/Saima223/Quiz-webapp.git>
    ```
 
 2. Import the project into Eclipse:
