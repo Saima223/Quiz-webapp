@@ -1,6 +1,7 @@
 package testing.servlet;
 
 import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ public class LoginController extends HttpServlet {
     
     public LoginController() {
         super();
-        userDAO = new UserDAO();
+        userDAO = new UserDAO(null);
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
@@ -36,7 +37,7 @@ public class LoginController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 session.setAttribute("userId", user.getId());
-                session.setAttribute("fname", user.getUsername());
+                session.setAttribute("fname", user.getFname());
                 
                 // Debug logs
                 System.out.println("Login successful for user ID: " + user.getId());

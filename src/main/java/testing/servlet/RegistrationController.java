@@ -1,13 +1,13 @@
 package testing.servlet;
 
+import java.io.IOException;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 import testing.dao.UserDAO;
 import testing.model.Users;
 
@@ -26,10 +26,10 @@ public class RegistrationController extends HttpServlet {
 
 			Users users = new Users();
 			users.setAnumber(anumber);
-			users.setUsername(fname);
+			users.setFname(fname);
 			users.setEmail(email);
 			users.setPnumber(pnumber);
-			users.setPassword(pswd);
+			users.setPswd(pswd);
 
 			System.out.println(anumber);
 			System.out.println(fname);
@@ -37,7 +37,7 @@ public class RegistrationController extends HttpServlet {
 			System.out.println(pnumber);
 			System.out.println(pswd);
 
-			UserDAO userdao = new UserDAO();
+			UserDAO userdao = new UserDAO(null);
 
 			 
 			if (userdao.userExists(email)) {
