@@ -213,7 +213,7 @@ h3::after {
     </div>
     
     <div class="footer-bottom">
-        <p>Easy Tutorials © 2021 - All Rights Reserved</p>
+        <p>Quiz web-aap © 2021 - All Rights Reserved</p>
     </div>
 </footer>
 

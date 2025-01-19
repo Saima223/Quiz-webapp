@@ -45,7 +45,7 @@
         .difficulty-container {
             background: rgba(37, 37, 71, 0.9);
             backdrop-filter: blur(10px);
-            padding: 4rem;
+            padding: 2rem;
             border-radius: 1.5rem;
             text-align: center;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
@@ -166,6 +166,8 @@
     </style>
 </head>
 <body>
+    <jsp:include page="header.jsp" />
+
 <div class="difficulty-container">
     <h1>Select Difficulty</h1>
     

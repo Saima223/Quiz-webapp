@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = {"/quiz.jsp", "/quizResult.jsp", "/submitQuiz", "/quizQuestion", "/quizList"})  // Add other protected pages here
+@WebFilter(urlPatterns = {"/quiz.jsp", "/quizResult.jsp", "/submitQuiz", "/quizQuestion"})  // Add other protected pages here
 public class AuthenticationFilter implements Filter {
     
     @Override

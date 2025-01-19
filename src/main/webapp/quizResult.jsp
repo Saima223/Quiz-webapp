@@ -70,7 +70,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 3rem 1.5rem;
+            padding: 5rem 1.5rem;
             position: relative;
             z-index: 1;
         }
@@ -537,14 +537,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="admin/login.jsp">QuizWeb</a>
-            <div>
-                <p class="text-white">Welcome, <strong><%= request.getAttribute("fname") %></strong></p>
-            </div>
-        </div>
-    </nav>
+    <jsp:include page="header.jsp" />
 
     <div class="main-container">
         <div class="result-card">
@@ -596,12 +589,6 @@
     </div>
 
     <footer>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-        </div>
         <div class="copyright">&copy; 2024 QuizWeb. All rights reserved.</div>
         <div class="credits">
             Developed & designed by
