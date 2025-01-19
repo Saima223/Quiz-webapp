@@ -581,9 +581,10 @@
                 <a href="quizList" class="btn btn-secondary">
                     <i class="fas fa-home"></i> Back to Home
                 </a>
-                <a href="quizQuestion?quizId=<%= request.getAttribute("quizId") %>" class="btn btn-primary">
-                    <i class="fas fa-redo"></i> Try Again
-                </a>
+                <a href="quizQuestion?quizId=<%= request.getAttribute("quizId") %>&difficulty=<%= request.getAttribute("difficulty") %><%= (request.getAttribute("randomCount") != null && !request.getAttribute("randomCount").toString().isEmpty()) ? "&randomCount=" + request.getAttribute("randomCount") : "" %>" class="btn btn-primary">
+    <i class="fas fa-redo"></i> Try Again
+</a>
+                
             </div>
         </div>
     </div>

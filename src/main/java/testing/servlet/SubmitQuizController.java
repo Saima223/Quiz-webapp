@@ -65,6 +65,12 @@ public class SubmitQuizController extends HttpServlet {
                 questions = questions.stream()
                     .filter(q -> q.getDifficulty().equalsIgnoreCase(difficulty))
                     .collect(Collectors.toList());
+                
+                if (questions.isEmpty()) {
+                    System.out.println("ERROR: No questions found for difficulty: " + difficulty);
+                    response.sendRedirect("difficulty?quizId=" + quizId);
+                    return;
+                }
             } else if (difficulty != null && difficulty.equals("random") && randomCount != null) {
                 try {
                     int count = Integer.parseInt(randomCount);
@@ -120,11 +126,12 @@ public class SubmitQuizController extends HttpServlet {
             request.setAttribute("score", score);
             request.setAttribute("totalQuestions", questions.size());
             request.setAttribute("quizId", quizId);
-
-            // Clear quiz-related session attributes after submission
-            session.removeAttribute("currentQuizId");
-            session.removeAttribute("currentDifficulty");
-            session.removeAttribute("randomCount");
+            
+            // Keep difficulty settings in session for "Try Again" functionality
+            request.setAttribute("difficulty", difficulty);
+            if ("random".equals(difficulty)) {
+                request.setAttribute("randomCount", randomCount);
+            }
 
             // Forward to result page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/quizResult.jsp");
