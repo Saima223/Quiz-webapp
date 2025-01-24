@@ -223,7 +223,7 @@
             <label for="random">Random Mix</label>
         </div>
 
-        <div class="random-options" id="randomOptions" style="display: none;">
+        <div class="random-options" id="randomOptions" disabled>
             <select name="randomCount" id="randomCount">
                 <option value="3">3 Questions</option>
                 <option value="5">5 Questions</option>
@@ -235,24 +235,23 @@
 </div>
 
     <script>
-        document.getElementById('random').addEventListener('change', function() {
-            document.getElementById('randomOptions').style.display = 
-                this.checked ? 'block' : 'none';
-        });
+    document.getElementById('random').addEventListener('change', function() {
+        if (this.checked) {
+            document.getElementById('randomOptions').style.display = 'block';
+            document.getElementById('randomCount').disabled = false;
+        }
+    });
 
-        // Add visual feedback for selected difficulty
-        document.querySelectorAll('.difficulty-option').forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove active class from all options
-                document.querySelectorAll('.difficulty-option').forEach(opt => {
-                    opt.style.background = 'rgba(255, 255, 255, 0.05)';
-                });
-                // Add active class to selected option
-                this.style.background = 'rgba(255, 255, 255, 0.15)';
-                // Check the radio button
-                this.querySelector('input[type="radio"]').checked = true;
-            });
+    document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value !== 'random') {
+                document.getElementById('randomOptions').style.display = 'none';
+                document.getElementById('randomCount').disabled = true;
+            }
         });
+    });
+
+
     </script>
 </body>
 </html>
